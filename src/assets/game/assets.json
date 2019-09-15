@@ -24,11 +24,26 @@
       {
         "type": "spritesheet",
         "key": "player",
-        "url": "/game/character.png",
+        "url": "/game/player.png",
         "frameConfig": {
-          "frameWidth": 96,
-          "frameHeight": 96
+          "frameWidth": 80,
+          "frameHeight": 110
         }
+      },
+      {
+        "type": "image",
+        "key": "button-a",
+        "url": "/game/ui/button-a.png"
+      },
+      {
+        "type": "image",
+        "key": "button-left",
+        "url": "/game/ui/button-left.png"
+      },
+      {
+        "type": "image",
+        "key": "button-right",
+        "url": "/game/ui/button-right.png"
       }
     ]
   }

@@ -14,14 +14,13 @@ interface Keys {
 const FRAMES = {
   IDLE: 0,
   JUMP: 3,
-  DUCK: 4
+  FALL: 4
 };
 
 class Player extends Phaser.GameObjects.Sprite {
   // variables
   private _scene: Phaser.Scene;
   private _jumping: boolean;
-  private _keys: Keys;
 
   public constructor({ scene, x, y }: PlayerOptions) {
     super(scene, x, y, 'player', FRAMES.IDLE);
@@ -29,29 +28,56 @@ class Player extends Phaser.GameObjects.Sprite {
     this._scene = scene;
     this._jumping = false;
 
-    // setup keys
-    this._keys = {
-      LEFT: scene.input.keyboard.addKey('LEFT'),
-      RIGHT: scene.input.keyboard.addKey('RIGHT'),
-      UP: scene.input.keyboard.addKey('UP'),
-      DOWN: scene.input.keyboard.addKey('DOWN')
-    };
-
     this.setupPhysics();
     this.setOrigin(0, 1);
-    this.setSize(64, 64);
-    this.setDisplaySize(64, 64);
     this._scene.add.existing(this);
   }
 
   private setupPhysics() {
     this._scene.physics.world.enable(this);
-    (this.body as Phaser.Physics.Arcade.Body).maxVelocity.x = 200;
-    (this.body as Phaser.Physics.Arcade.Body).maxVelocity.y = 200;
+
+    const physicsBody = this.body as Phaser.Physics.Arcade.Body;
+    physicsBody.maxVelocity.x = 200;
+    physicsBody.maxVelocity.y = 200;
+    physicsBody.setAccelerationX(0);
   }
 
-  // movement
-  private handleInput(): void {
+  private animate(): void {
+    const physicsBody = this.body as Phaser.Physics.Arcade.Body;
+
+    if (physicsBody.velocity.y > 0) {
+      // FALL
+      this.setFrame(FRAMES.FALL);
+    } else if (physicsBody.velocity.y < 0) {
+      // JUMP
+      this.setFrame(FRAMES.JUMP);
+    } else if (physicsBody.velocity.x !== 0) {
+      // WALK
+      this.anims.play('player-walk', true);
+    } else {
+      // IDLE
+      this.anims.stop();
+      this.setFrame(FRAMES.IDLE);
+    }
+  }
+
+  public move(speed: number): void {
+    if (!this._jumping) {
+      const physicsBody = this.body as Phaser.Physics.Arcade.Body;
+      physicsBody.setVelocityX(speed);
+      this.setFlipX(speed < 0);
+    }
+  }
+
+  public jump(): void {
+    if (!this._jumping) {
+      const physicsBody = this.body as Phaser.Physics.Arcade.Body;
+      physicsBody.setVelocityY(-200);
+      this._jumping = true;
+    }
+  }
+
+  public update(): void {
     const physicsBody = this.body as Phaser.Physics.Arcade.Body;
     if (
       physicsBody.onFloor() ||
@@ -61,44 +87,6 @@ class Player extends Phaser.GameObjects.Sprite {
       this._jumping = false;
     }
 
-    if (this._keys['RIGHT'].isDown) {
-      // move right
-      physicsBody.setAccelerationX(200);
-    } else if (this._keys['LEFT'].isDown) {
-      // move left
-      physicsBody.setAccelerationX(-200);
-    } else {
-      // idle
-      physicsBody.setVelocityX(0);
-      physicsBody.setAccelerationX(0);
-    }
-
-    if (this._keys['UP'].isDown && !this._jumping) {
-      physicsBody.setVelocityY(-200);
-      this._jumping = true;
-    }
-  }
-
-  private animate(): void {
-    const physicsBody = this.body as Phaser.Physics.Arcade.Body;
-
-    if (physicsBody.velocity.y !== 0) {
-      // jumping / falling
-      this.anims.stop();
-      this.setFrame(FRAMES.JUMP);
-    } else if (physicsBody.velocity.x !== 0) {
-      // player is running
-      this.anims.play('player-walk', true);
-      this.setFlipX(physicsBody.velocity.x < 0);
-    } else {
-      // player is standing still
-      this.anims.stop();
-      this.setFrame(FRAMES.IDLE);
-    }
-  }
-
-  public update(): void {
-    this.handleInput();
     this.animate();
   }
 }

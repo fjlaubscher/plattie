@@ -21,6 +21,39 @@ class GameScene extends Phaser.Scene {
     if (banner) {
       banner.innerText = '';
     }
+
+    // buttons
+    const leftButton = document.getElementById('btnLeft');
+    if (leftButton) {
+      leftButton.addEventListener(
+        'pointerdown',
+        () => this._player && this._player.move(-200)
+      );
+      leftButton.addEventListener(
+        'pointerup',
+        () => this._player && this._player.move(0)
+      );
+    }
+
+    const rightButton = document.getElementById('btnRight');
+    if (rightButton) {
+      rightButton.addEventListener(
+        'pointerdown',
+        () => this._player && this._player.move(200)
+      );
+      rightButton.addEventListener(
+        'pointerup',
+        () => this._player && this._player.move(0)
+      );
+    }
+
+    const jumpButton = document.getElementById('btnA');
+    if (jumpButton) {
+      jumpButton.addEventListener(
+        'pointerdown',
+        () => this._player && this._player.jump()
+      );
+    }
   }
 
   public create(): void {
