@@ -1,0 +1,51 @@
+<html lang="en">
+  <head>
+    <title>HELIX</title>
+    <meta name='description' content='🧬 Yet another opinionated PWA ready React boilerplate with pre-rendering.'>
+    <meta name='og:title' content='HELIX'>
+    <meta name='og:description' content='🧬 Yet another opinionated PWA ready React boilerplate with pre-rendering.'>
+    <meta name='og:image' content='https://i.imgur.com/5FJS5G0.png'>
+    <meta name='og:url' content='https://fjlaubscher.github.io/helix/'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, shrink-to-fit=no'>
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+    <style>
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+      }
+
+      body {
+        position: relative;
+        font-family: 'Press Start 2P', Arial, Helvetica, sans-serif;
+        overflow: hidden;
+      }
+
+      .banner {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        color: #f28a30;
+        z-index: 1;
+      }
+
+      .banner h1 {
+        text-align: center;
+        padding: 1rem;
+      }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <base href='<%= htmlWebpackPlugin.options.publicPath %>'>
+  </head>
+  <body>
+    <div class='banner'>
+      <h1 id='bannerText'>Loading!</h1>
+    </div>
+  </body>
+</html>

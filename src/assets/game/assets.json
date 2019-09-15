@@ -1,0 +1,35 @@
+{
+  "preload": {
+    "files": [
+      {
+        "type": "image",
+        "key": "background",
+        "url": "/game/background.png"
+      },
+      {
+        "type": "json",
+        "key": "animations",
+        "url": "/game/animations.json"
+      },
+      {
+        "type": "tilemapTiledJSON",
+        "key": "e1m1",
+        "url": "/game/maps/e1m1.json"
+      },
+      {
+        "type": "image",
+        "key": "tileset",
+        "url": "/game/maps/tilesheet.png"
+      },
+      {
+        "type": "spritesheet",
+        "key": "player",
+        "url": "/game/character.png",
+        "frameConfig": {
+          "frameWidth": 96,
+          "frameHeight": 96
+        }
+      }
+    ]
+  }
+}

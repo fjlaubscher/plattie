@@ -1,0 +1,15 @@
+{
+  "anims": [
+    {
+      "key": "player-walk",
+      "frames": {
+        "typeOfGeneration": "generateFrameNumbers",
+        "key": "player",
+        "start": 1,
+        "end": 2
+      },
+      "repeat": -1,
+      "frameRate": 10
+    }
+  ]
+}
