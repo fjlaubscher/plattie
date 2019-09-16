@@ -38,7 +38,7 @@ class Player extends Phaser.GameObjects.Sprite {
 
     const physicsBody = this.body as Phaser.Physics.Arcade.Body;
     physicsBody.maxVelocity.x = 200;
-    physicsBody.maxVelocity.y = 200;
+    physicsBody.maxVelocity.y = 1000;
     physicsBody.setAccelerationX(0);
   }
 
@@ -62,17 +62,15 @@ class Player extends Phaser.GameObjects.Sprite {
   }
 
   public move(speed: number): void {
-    if (!this._jumping) {
-      const physicsBody = this.body as Phaser.Physics.Arcade.Body;
-      physicsBody.setVelocityX(speed);
-      this.setFlipX(speed < 0);
-    }
+    const physicsBody = this.body as Phaser.Physics.Arcade.Body;
+    physicsBody.setVelocityX(speed);
+    this.setFlipX(speed < 0);
   }
 
   public jump(): void {
     if (!this._jumping) {
       const physicsBody = this.body as Phaser.Physics.Arcade.Body;
-      physicsBody.setVelocityY(-200);
+      physicsBody.setVelocityY(-300);
       this._jumping = true;
     }
   }
